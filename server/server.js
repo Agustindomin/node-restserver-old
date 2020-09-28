@@ -47,7 +47,7 @@ app.put('/usuario/:id', function(req, res) {
 });
 
 app.delete('/usuario', function(req, res) {
-    res.json('POST Usuario');
+    res.json('DELETE Usuario');
 });
 
 // app.listen(3000, () => {
