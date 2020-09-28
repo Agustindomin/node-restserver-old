@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 
 app.get('/usuario', function(req, res) {
     // res.send('Hello World');
-    res.json('GET Usuario');
+    res.json(`GET Usuario${process.env.PORT==3000 ? ' LOCAL' : ''}`);
 });
 
 app.post('/usuario', function(req, res) {
