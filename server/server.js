@@ -1,7 +1,11 @@
 // Cargamos el config
 require('./config/config');
 
+// Cargamos express
 const express = require('express');
+// Cargamos mongoose
+const mongoose = require('mongoose');
+
 const app = express();
 
 // Paquete body-parser para gestionar peticiones post (variables en el body de la petición)
@@ -13,42 +17,24 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/usuario', function(req, res) {
-    // res.send('Hello World');
-    res.json(`GET Usuario${process.env.PORT==3000 ? ' LOCAL' : ''}`);
-});
+// Pasamos las rutas a /routes/usuario.js
+app.use(require('./routes/usuario'));
 
-app.post('/usuario', function(req, res) {
+// Conectamos a mongodb
+mongoose.connect(process.env.URLDB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    },
+    (err, res) => {
 
-    let body = req.body;
+        if (err) throw err;
 
-    if (body.nombre === undefined) {
+        console.log('Base de datos ONLINE');
 
-        res.status(400).json({
-            ok: false,
-            mensaje: 'El nombre es necesario'
-        }); // Si no viene el nombre devolvemos 400 - Bad Rsequest
-
-    } else {
-        res.json({
-            'persona': body
-        });
-    }
-
-});
-
-app.put('/usuario/:id', function(req, res) {
-
-    let id = req.params.id;
-
-    res.json({
-        id
     });
-});
 
-app.delete('/usuario', function(req, res) {
-    res.json('DELETE Usuario');
-});
 
 // app.listen(3000, () => {
 //     console.log('Escuchando el puerto:', 3000);
