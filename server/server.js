@@ -17,6 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// Habilitar la carpeta public
+const path = require('path');
+app.use( express.static(path.resolve( __dirname , '../public')));
+// console.log(path.resolve( __dirname , '../public'));
+
 // Configuracion Global de rutas, ahora estan en el index.js
 app.use(require('./routes/index'));
 
