@@ -50,7 +50,43 @@ let verificaAdmin_Role = (req, res, next) => {
 
 };
 
+// ============================================
+// Verificar Token Img por parametro en la URL
+// ============================================
+let verificaTokenImg = (req, res, next) => {
+
+    let token = req.query.token; // parametro pasado por GET
+
+    // res.json({
+    //     token
+    // });
+
+    jwt.verify(token, process.env.SEED, (err, decoded) => {
+
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Token no válido'
+                }
+            }); // Si hay un error devolvemos 400 - Bad Request
+        }
+
+        // Si no hay errores de verificacion es que el token es válido, añadimos la informacfion del usuario al req.
+        req.usuario = decoded.usuario;
+
+        next(); // para que continue la ejecución del script
+
+    });
+
+
+    // console.log(token);
+};
+
+
+
 module.exports = {
     verificaToken,
-    verificaAdmin_Role
+    verificaAdmin_Role,
+    verificaTokenImg
 };

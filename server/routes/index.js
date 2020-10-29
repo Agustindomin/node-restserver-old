@@ -11,5 +11,9 @@ app.use(require('./login'));
 app.use(require('./categoria'));
 // Ruta de productos
 app.use(require('./producto'));
+// Ruta de uploads de ficheros
+app.use(require('./upload'));
+// Ruta pare servir las imagenes uploaded
+app.use(require('./imagenes'));
 
 module.exports = app;
